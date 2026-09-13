@@ -1,0 +1,13 @@
+services:
+  sera-menu:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: sera-restaurant-menu:latest
+    container_name: sera-restaurant-menu
+    restart: unless-stopped
+    init: true
+    ports:
+      - "${SERA_PORT:-3000}:80"
+    security_opt:
+      - no-new-privileges:true
