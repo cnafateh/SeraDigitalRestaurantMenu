@@ -16,7 +16,6 @@ A polished, mobile-first restaurant menu concept built as a portfolio-ready fron
 - Lightweight static production build served by Nginx
 - Multi-stage Docker build and SPA routing fallback
 
-Original image-generation briefs are documented in `IMAGE_PROMPTS.md`.
 
 ## Tech stack
 
@@ -104,7 +103,3 @@ src/
 - Cards use a consistent component model for variable pricing, dietary badges, details affordance and sold-out treatment.
 - Dish pages layer information by importance: overview, portion, ingredients, primary nutrition and collapsible secondary values.
 - The 375–390 px mobile experience remains the baseline while larger layouts make purposeful use of space.
-
-## License
-
-MIT
