@@ -17,11 +17,11 @@ The catalog in `server/seed.json` is imported automatically **only when the venu
 ## Quick start
 
 1. Copy `.env.example` to `.env`.
-2. Set `SERA_DATABASE_URL` to your existing PostgreSQL database and user, and set an `SERA_ADMIN_PASSWORD` of at least 12 characters.
+2. Set `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, and `DB_NETWORK` for your existing PostgreSQL container and Docker network. Set an `SERA_ADMIN_PASSWORD` of at least 12 characters.
 3. Run `docker compose up --build -d`.
 4. Open `http://localhost:3000` for the collection and `http://localhost:3000/admin` for the dashboard.
 
-This development Compose stack builds the web and API containers and connects to your existing PostgreSQL server. It does not start a database container. Uploaded images and authentication keys are stored in named Docker volumes. Change `SERA_PORT` in `.env` if port 3000 is occupied. Put the site behind HTTPS for public deployment.
+This development Compose stack builds the web and API containers. The API joins the external `DB_NETWORK`, where `DB_HOST` must resolve to your existing PostgreSQL service. It does not start a database container. Uploaded images and authentication keys are stored in named Docker volumes. Set `SERA_PORT` in `.env` if port 3000 is occupied. Put the site behind HTTPS for public deployment.
 
 ### Deploy the published image
 
@@ -29,24 +29,25 @@ This development Compose stack builds the web and API containers and connects to
 
 | Variable | Value |
 | --- | --- |
-| `DATABASE_URL` | Npgsql connection string, for example `Host=postgres.example.com;Port=5432;Database=sera;Username=sera;Password=...` |
+| `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD` | Credentials for the existing PostgreSQL server; `DB_HOST` is its name or alias on the shared Docker network |
+| `DATABASE_URL` | Optional alternative Npgsql connection string; takes precedence over the `DB_*` variables |
 | `SERA_ADMIN_PASSWORD` | A unique password of at least 12 characters |
 | `ASPNETCORE_FORWARDEDHEADERS_ENABLED` | `true` when serving through an HTTPS reverse proxy |
 
-Use `/health` for the container health check. Persist `/app/uploads` and `/root/.aspnet/DataProtection-Keys` across replacements. The database user needs permission to create tables and an index on first startup; seed data is imported when the venues table is empty. If `DATABASE_URL` is absent or PostgreSQL cannot be reached, the app exits during startup and the container cannot become healthy. Check the container logs for the connection error.
+Use `/health` for the container health check. Persist `/app/uploads` and `/root/.aspnet/DataProtection-Keys` across replacements. The database user needs permission to create tables and an index on first startup; seed data is imported when the venues table is empty. If the database settings are absent or PostgreSQL cannot be reached, the app exits during startup and the container cannot become healthy. Check the container logs for the connection error.
 
-For a server with PostgreSQL already running, set `SERA_DATABASE_URL`, `SERA_ADMIN_PASSWORD` and optionally `SERA_PORT` in `.env`, then run:
+For a server with PostgreSQL and a reverse proxy already running in Docker, set the `DB_*` variables, `DB_NETWORK`, `NPM_NETWORK`, and `SERA_ADMIN_PASSWORD` in `.env`, then run:
 
 ```bash
 docker compose -f docker-compose.prod.yml up -d
 docker compose -f docker-compose.prod.yml ps
 ```
 
-The production Compose file maps `SERA_DATABASE_URL` to the image's `DATABASE_URL`. If PostgreSQL runs directly on the Docker host, use a hostname reachable **from inside the container** rather than `localhost`.
+The production Compose file joins your existing database and proxy networks. Point the reverse proxy at `sera-menu:80` on `NPM_NETWORK`. It does not publish a host port. `DB_HOST` must be a container name or network alias reachable on `DB_NETWORK`, rather than `localhost`.
 
 ### Use an existing PostgreSQL server
 
-The API accepts a standard Npgsql connection string through `DATABASE_URL`; both Compose files map `SERA_DATABASE_URL` to it. Neither Compose file creates a PostgreSQL container or database. The API creates its tables and index inside the database you provide, so its user needs schema creation permissions on first startup. Back up the existing database and uploads volume together.
+The API accepts either the separate `DB_*` variables or an Npgsql connection string in `DATABASE_URL`. Both Compose files use the separate variables and join your external database network. Neither creates a PostgreSQL container or database. The API creates its tables and index inside the database you provide, so its user needs schema creation permissions on first startup. Back up the existing database and uploads volume together.
 
 ### Local development
 
@@ -58,7 +59,7 @@ npm run dev
 In another terminal, start PostgreSQL and the API:
 
 ```bash
-# Set DATABASE_URL and SERA_ADMIN_PASSWORD in your environment first.
+# Set DATABASE_URL (or the DB_* variables) and SERA_ADMIN_PASSWORD first.
 dotnet run --project server/Sera.Api.csproj --urls http://localhost:5000
 ```
 

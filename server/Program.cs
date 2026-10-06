@@ -11,8 +11,22 @@ using NpgsqlTypes;
 using Sera.Api;
 
 var builder = WebApplication.CreateBuilder(args);
-var connection = Environment.GetEnvironmentVariable("DATABASE_URL") ?? builder.Configuration.GetConnectionString("Postgres")
-    ?? throw new InvalidOperationException("Set DATABASE_URL to a PostgreSQL connection string.");
+var connection = Environment.GetEnvironmentVariable("DATABASE_URL") ?? builder.Configuration.GetConnectionString("Postgres");
+if (string.IsNullOrWhiteSpace(connection))
+{
+    static string RequiredDbValue(string name) => Environment.GetEnvironmentVariable(name) is { Length: > 0 } value
+        ? value : throw new InvalidOperationException($"Set {name} or DATABASE_URL for the existing PostgreSQL server.");
+    if (!int.TryParse(Environment.GetEnvironmentVariable("DB_PORT") ?? "5432", out var dbPort) || dbPort is < 1 or > 65535)
+        throw new InvalidOperationException("DB_PORT must be a valid TCP port.");
+    connection = new NpgsqlConnectionStringBuilder
+    {
+        Host = RequiredDbValue("DB_HOST"),
+        Port = dbPort,
+        Database = RequiredDbValue("DB_NAME"),
+        Username = RequiredDbValue("DB_USER"),
+        Password = RequiredDbValue("DB_PASSWORD")
+    }.ConnectionString;
+}
 builder.Services.AddSingleton(NpgsqlDataSource.Create(connection));
 builder.Services.AddScoped<MenuStore>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>

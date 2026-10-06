@@ -1,3 +1,10 @@
+x-database-environment: &database-environment
+  DB_HOST: ${DB_HOST:?Set DB_HOST to the PostgreSQL container name or network alias}
+  DB_PORT: ${DB_PORT:-5432}
+  DB_NAME: ${DB_NAME:?Set DB_NAME}
+  DB_USER: ${DB_USER:?Set DB_USER}
+  DB_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD}
+
 services:
   api:
     build:
@@ -5,9 +12,10 @@ services:
       dockerfile: server/Dockerfile
     restart: unless-stopped
     environment:
-      DATABASE_URL: ${SERA_DATABASE_URL:?Set SERA_DATABASE_URL to your existing PostgreSQL connection string}
+      <<: *database-environment
       SERA_ADMIN_PASSWORD: ${SERA_ADMIN_PASSWORD:?Set SERA_ADMIN_PASSWORD in .env}
       ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+    networks: [default, database]
     volumes:
       - uploads:/app/uploads
       - protection_keys:/root/.aspnet/DataProtection-Keys
@@ -31,3 +39,8 @@ services:
 volumes:
   uploads:
   protection_keys:
+
+networks:
+  database:
+    external: true
+    name: ${DB_NETWORK:?Set DB_NETWORK to the existing PostgreSQL network name}
