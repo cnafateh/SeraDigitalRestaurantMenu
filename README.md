@@ -2,6 +2,8 @@
 
 A self-hosted digital menu platform for restaurants, cafés, fast food concepts and gelato bars. Guests get a responsive, food-first menu; operators get a private dashboard to edit their venue, template, products, prices, availability and photography.
 
+**مستندات کامل فارسی:** [فهرست راهنما](docs/README.md) · [معماری](docs/architecture.md) · [راه‌اندازی](docs/setup.md) · [تمام endpointها](docs/api.md) · [مدل داده](docs/data.md) · [رابط و پنل](docs/frontend.md) · [عملیات و عیب‌یابی](docs/operations.md) · [توسعه](docs/development.md)
+
 ## What is included
 
 - Five visual templates: pizzeria, traditional restaurant, fast food, café and gelato/juice bar
@@ -27,12 +29,12 @@ The default Compose stack builds one container containing both the frontend and 
 
 `ghcr.io/cnafateh/seradigitalrestaurantmenu:latest` contains both the built frontend and ASP.NET API. It listens on container port **80** and needs a reachable PostgreSQL server. Set these environment variables in your deployment platform:
 
-| Variable | Value |
-| --- | --- |
+| Variable                                                  | Value                                                                                                       |
+| --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD` | Credentials for the existing PostgreSQL server; `DB_HOST` is its name or alias on the shared Docker network |
-| `DATABASE_URL` | Optional alternative Npgsql connection string; takes precedence over the `DB_*` variables |
-| `SERA_ADMIN_PASSWORD` | A unique password of at least 12 characters |
-| `ASPNETCORE_FORWARDEDHEADERS_ENABLED` | `true` when serving through an HTTPS reverse proxy |
+| `DATABASE_URL`                                            | Optional alternative Npgsql connection string; takes precedence over the `DB_*` variables                   |
+| `SERA_ADMIN_PASSWORD`                                     | A unique password of at least 12 characters                                                                 |
+| `ASPNETCORE_FORWARDEDHEADERS_ENABLED`                     | `true` when serving through an HTTPS reverse proxy                                                          |
 
 Use `/health` for the container health check. Persist `/app/uploads` and `/root/.aspnet/DataProtection-Keys` across replacements. The database user needs permission to create tables and an index on first startup; seed data is imported when the venues table is empty. If the database settings are absent or PostgreSQL cannot be reached, the app exits during startup and the container cannot become healthy. Check the container logs for the connection error.
 
@@ -58,25 +60,26 @@ npm ci
 npm run dev
 ```
 
-In another terminal, start PostgreSQL and the API:
+In another terminal, start the API from its project directory (with your existing PostgreSQL server reachable):
 
 ```bash
 # Set DATABASE_URL (or the DB_* variables) and SERA_ADMIN_PASSWORD first.
-dotnet run --project server/Sera.Api.csproj --urls http://localhost:5000
+cd server
+dotnet run --urls http://localhost:5000
 ```
 
-Vite proxies `/api` and `/uploads` to the API on port 5000. `npm run build` and `dotnet build server/Sera.Api.csproj` verify both applications. The API container uses a configurable `NUGET_SOURCE` build argument for package restore.
+Vite proxies `/api` and `/uploads` to the API on port 5000. `npm run build` and `dotnet build server/Sera.Api.csproj` verify both applications. The Docker build uses a configurable `NUGET_SOURCE` build argument for package restore.
 
 ## Routes and API
 
-| Route | Purpose |
-| --- | --- |
-| `/` | Browse the five demo concepts |
-| `/menu/{venueId}` | Public venue menu |
-| `/dish/{venueId}/{slug}` | Product details |
-| `/admin` | Private management dashboard |
-| `/api/menu/{venueId}` | Published venue and items |
-| `/api/admin/*` | Authenticated venue, item and upload operations |
+| Route                    | Purpose                                         |
+| ------------------------ | ----------------------------------------------- |
+| `/`                      | Browse the five demo concepts                   |
+| `/menu/{venueId}`        | Public venue menu                               |
+| `/dish/{venueId}/{slug}` | Product details                                 |
+| `/admin`                 | Private management dashboard                    |
+| `/api/menu/{venueId}`    | Published venue and items                       |
+| `/api/admin/*`           | Authenticated venue, item and upload operations |
 
 The dashboard uses an HTTP-only, same-site authentication cookie. Write requests require a same-origin custom header; login is rate limited. Uploads accept WebP, PNG and JPEG files up to 10 MB, with randomized server filenames. Keep the admin password private and use HTTPS on any public server.
 
@@ -94,4 +97,5 @@ src/types/          Shared frontend model
 src/lib/            API client
 src/platform.css    Templates, layout and motion
 public/images/      Local WebP menu photography
+docs/               Complete Persian technical and operational documentation
 ```
