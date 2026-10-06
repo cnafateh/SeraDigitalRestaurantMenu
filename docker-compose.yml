@@ -6,35 +6,19 @@ x-database-environment: &database-environment
   DB_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD}
 
 services:
-  api:
-    build:
-      context: .
-      dockerfile: server/Dockerfile
+  app:
+    build: .
     restart: unless-stopped
     environment:
       <<: *database-environment
       SERA_ADMIN_PASSWORD: ${SERA_ADMIN_PASSWORD:?Set SERA_ADMIN_PASSWORD in .env}
       ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
-    networks: [default, database]
+    networks: [database]
+    ports:
+      - "${SERA_PORT:-3000}:80"
     volumes:
       - uploads:/app/uploads
       - protection_keys:/root/.aspnet/DataProtection-Keys
-    healthcheck:
-      test: ["CMD", "curl", "-fsS", "http://localhost:8080/health"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
-
-  web:
-    build:
-      context: .
-      dockerfile: web/Dockerfile
-    restart: unless-stopped
-    ports:
-      - "${SERA_PORT:-3000}:80"
-    depends_on:
-      api:
-        condition: service_healthy
 
 volumes:
   uploads:

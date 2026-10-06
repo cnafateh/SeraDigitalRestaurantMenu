@@ -9,7 +9,7 @@ A self-hosted digital menu platform for restaurants, cafés, fast food concepts 
 - Search, category filters, dedicated item pages, size/price selection and allergen information
 - Dashboard for venue identity, template selection, publishing, menu items and image uploads
 - ASP.NET Core 10 minimal API, PostgreSQL, React 19, TypeScript and Vite 8
-- Self-hosted WebP photography, Docker Compose and a single-image deployment option
+- Self-hosted WebP photography and a single-image Docker deployment
 - Motion effects with a reduced-motion fallback, semantic controls and visible keyboard focus
 
 The catalog in `server/seed.json` is imported automatically **only when the venues table is empty**. `server/generate_seed.py` rebuilds that file. Demo prices and allergen lists are illustrative; a real venue must review them before publishing.
@@ -21,7 +21,7 @@ The catalog in `server/seed.json` is imported automatically **only when the venu
 3. Run `docker compose up --build -d`.
 4. Open `http://localhost:3000` for the collection and `http://localhost:3000/admin` for the dashboard.
 
-This development Compose stack builds the web and API containers. The API joins the external `DB_NETWORK`, where `DB_HOST` must resolve to your existing PostgreSQL service. It does not start a database container. Uploaded images and authentication keys are stored in named Docker volumes. Set `SERA_PORT` in `.env` if port 3000 is occupied. Put the site behind HTTPS for public deployment.
+The default Compose stack builds one container containing both the frontend and API. It joins the external `DB_NETWORK`, where `DB_HOST` must resolve to your existing PostgreSQL service. It does not start a database or Nginx container. Uploaded images and authentication keys are stored in named Docker volumes. Set `SERA_PORT` in `.env` if port 3000 is occupied. Put the site behind HTTPS for public deployment.
 
 ### Deploy the published image
 
@@ -44,6 +44,8 @@ docker compose -f docker-compose.prod.yml ps
 ```
 
 The production Compose file joins your existing database and proxy networks. Point the reverse proxy at `sera-menu:80` on `NPM_NETWORK`. It does not publish a host port. `DB_HOST` must be a container name or network alias reachable on `DB_NETWORK`, rather than `localhost`.
+
+If upgrading from the earlier Nginx deployment, stop and remove its old `sera-restaurant-menu` container or old Compose stack in your deployment panel. The new `app` container replaces it. A log mentioning `nginx` and `upstream "api"` comes from that retired image; the current image runs ASP.NET directly and answers `/health` on port 80.
 
 ### Use an existing PostgreSQL server
 
@@ -86,7 +88,6 @@ The visual system gives each concept its own palette and hero composition while 
 
 ```text
 server/             ASP.NET API, schema and repeatable demo catalog
-web/Dockerfile      Nginx frontend for the three-service development stack
 Dockerfile          Published all-in-one frontend and API image
 src/pages/          Public collection, menu, item and dashboard screens
 src/types/          Shared frontend model
