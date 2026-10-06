@@ -8,7 +8,7 @@ A self-hosted digital menu platform for restaurants, cafés, fast food concepts 
 - A complete 12-pizza Italian demo menu, plus four smaller sample venues
 - Search, category filters, dedicated item pages, size/price selection and allergen information
 - Dashboard for venue identity, template selection, publishing, menu items and image uploads
-- ASP.NET Core 10 minimal API, PostgreSQL 17, React 19, TypeScript and Vite 8
+- ASP.NET Core 10 minimal API, PostgreSQL, React 19, TypeScript and Vite 8
 - Self-hosted WebP photography, Docker Compose and a single-image deployment option
 - Motion effects with a reduced-motion fallback, semantic controls and visible keyboard focus
 
@@ -17,11 +17,11 @@ The catalog in `server/seed.json` is imported automatically **only when the venu
 ## Quick start
 
 1. Copy `.env.example` to `.env`.
-2. Set a unique `POSTGRES_PASSWORD` and an `SERA_ADMIN_PASSWORD` of at least 12 characters.
+2. Set `SERA_DATABASE_URL` to your existing PostgreSQL database and user, and set an `SERA_ADMIN_PASSWORD` of at least 12 characters.
 3. Run `docker compose up --build -d`.
 4. Open `http://localhost:3000` for the collection and `http://localhost:3000/admin` for the dashboard.
 
-This development Compose stack runs web, API and PostgreSQL in separate containers. PostgreSQL data, uploaded images and authentication keys are stored in named Docker volumes. Change `SERA_PORT` in `.env` if port 3000 is occupied. Put the site behind HTTPS for public deployment.
+This development Compose stack builds the web and API containers and connects to your existing PostgreSQL server. It does not start a database container. Uploaded images and authentication keys are stored in named Docker volumes. Change `SERA_PORT` in `.env` if port 3000 is occupied. Put the site behind HTTPS for public deployment.
 
 ### Deploy the published image
 
@@ -46,7 +46,7 @@ The production Compose file maps `SERA_DATABASE_URL` to the image's `DATABASE_UR
 
 ### Use an existing PostgreSQL server
 
-The API accepts a standard Npgsql connection string through `DATABASE_URL`. The development Compose file includes a local PostgreSQL service for a one-command demo; the published image and `docker-compose.prod.yml` use your existing database server. Back up the database and uploads volume together.
+The API accepts a standard Npgsql connection string through `DATABASE_URL`; both Compose files map `SERA_DATABASE_URL` to it. Neither Compose file creates a PostgreSQL container or database. The API creates its tables and index inside the database you provide, so its user needs schema creation permissions on first startup. Back up the existing database and uploads volume together.
 
 ### Local development
 
