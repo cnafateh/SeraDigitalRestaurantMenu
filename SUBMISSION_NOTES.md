@@ -1,8 +1,10 @@
 # Product design rationale
 
-- The experience opens directly on the menu. Restaurant context is present, but search, categories and real dishes remain the primary task.
-- Food cards share one data-driven component model. Availability, badges, variant pricing and interaction affordance change without altering the card’s structure.
-- The featured Margherita creates an editorial entry point on desktop while collapsing into the same readable card pattern on mobile.
-- Portion selection couples price and nutrition as one state change, preventing contradictory information across the detail screen.
-- Ingredients use compact chips, primary macros remain visible, and secondary nutrition can collapse to preserve hierarchy on 375–390 px screens.
-- Sold-out items retain their place and information but remove misleading tap affordance, using contrast reduction and a direct availability message.
+Sera Studio serves five distinct dining concepts through one content model. Venue identity, photography, template and menu data are stored separately, so operators can change a concept without rewriting the interface.
+
+- The collection shows each template as a working menu, not a static mockup.
+- Menu search and category filters stay beside the dishes, with product details one tap away.
+- Ingredient, allergen and availability information is visible without interrupting browsing.
+- The pizzeria demo includes twelve distinct pizzas with matching local food photography.
+- The dashboard separates venue identity from individual menu items and previews the published result.
+- Decorative motion is lightweight and respects the reduced-motion setting.

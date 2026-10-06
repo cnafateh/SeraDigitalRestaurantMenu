@@ -1,8 +1,9 @@
 node_modules
 dist
 .git
-*.log
-*.zip
-.env*
-README.md
-SUBMISSION_NOTES.md
+.env
+.env.*
+!.env.example
+server/bin
+server/obj
+server/uploads

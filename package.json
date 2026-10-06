@@ -1,8 +1,15 @@
 {
-  "name": "sera-digital-menu",
-  "version": "1.0.0",
-  "description": "A modern, responsive digital restaurant menu built with React, TypeScript and Vite.",
-  "keywords": ["restaurant-menu", "react", "vite", "typescript", "ui-ux", "docker"],
+  "name": "sera-menu-studio",
+  "version": "2.0.0",
+  "description": "A self-hosted, multi-template digital menu platform with an ASP.NET Core API and PostgreSQL.",
+  "keywords": [
+    "restaurant-menu",
+    "react",
+    "aspnetcore",
+    "postgresql",
+    "typescript",
+    "docker"
+  ],
   "license": "MIT",
   "private": true,
   "type": "module",
@@ -10,6 +17,7 @@
     "dev": "vite --host 0.0.0.0",
     "typecheck": "tsc -b",
     "build": "npm run typecheck && vite build",
+    "format:check": "prettier --check src",
     "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {
@@ -20,6 +28,7 @@
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.2",
+    "prettier": "^3.9.8",
     "typescript": "5.9.3",
     "vite": "8.0.13"
   },

@@ -1,0 +1,819 @@
+{
+  "venues": [
+    {
+      "id": "forno",
+      "name": "FORNO",
+      "tagline": "A little Naples, wherever you are.",
+      "description": "Slow-fermented dough. A fiercely hot oven. Ingredients that speak for themselves.",
+      "location": "Napoli · Italy",
+      "hours": "12:00 — 23:00",
+      "currency": "EUR",
+      "template": "pizzeria",
+      "heroImage": "/images/pizza-margherita.webp",
+      "published": true
+    },
+    {
+      "id": "narenj",
+      "name": "NARENJ",
+      "tagline": "Tradition, served with warmth.",
+      "description": "Persian classics, generous tables and the aroma of saffron.",
+      "location": "Tehran · Iran",
+      "hours": "11:30 — 23:00",
+      "currency": "EUR",
+      "template": "traditional",
+      "heroImage": "/images/traditional-kebab.webp",
+      "published": true
+    },
+    {
+      "id": "stack",
+      "name": "STACK",
+      "tagline": "Big flavour. No waiting around.",
+      "description": "Smash burgers, golden fries and the good kind of messy.",
+      "location": "London · UK",
+      "hours": "11:00 — 01:00",
+      "currency": "EUR",
+      "template": "fastfood",
+      "heroImage": "/images/fastfood-burger.webp",
+      "published": true
+    },
+    {
+      "id": "morrow",
+      "name": "MORROW",
+      "tagline": "Your everyday ritual, elevated.",
+      "description": "Thoughtful coffee, slow mornings and something good from the oven.",
+      "location": "Copenhagen · Denmark",
+      "hours": "08:00 — 19:00",
+      "currency": "EUR",
+      "template": "cafe",
+      "heroImage": "/images/cafe-cappuccino.webp",
+      "published": true
+    },
+    {
+      "id": "scoop",
+      "name": "SCOOP",
+      "tagline": "A little joy in every scoop.",
+      "description": "Small-batch gelato, fresh fruit and the brightest part of your day.",
+      "location": "Milan · Italy",
+      "hours": "10:00 — 22:00",
+      "currency": "EUR",
+      "template": "gelato",
+      "heroImage": "/images/gelato-cone.webp",
+      "published": true
+    }
+  ],
+  "items": [
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "forno",
+      "slug": "margherita",
+      "category": "Classics",
+      "name": "Margherita",
+      "subtitle": "The original, beautifully simple",
+      "description": "San Marzano tomato, fior di latte, fresh basil and extra virgin olive oil on 48-hour fermented dough.",
+      "image": "/images/pizza-margherita.webp",
+      "ingredients": [
+        "San Marzano tomato",
+        "Fior di latte",
+        "Basil",
+        "Olive oil",
+        "Tipo 00 dough"
+      ],
+      "allergens": [
+        "Wheat",
+        "Milk"
+      ],
+      "tags": [
+        "Vegetarian",
+        "Signature"
+      ],
+      "variants": [
+        {
+          "label": "12 inch",
+          "price": 14
+        },
+        {
+          "label": "16 inch",
+          "price": 20
+        }
+      ],
+      "featured": true,
+      "available": true,
+      "sortOrder": 0
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "forno",
+      "slug": "marinara",
+      "category": "Classics",
+      "name": "Marinara",
+      "subtitle": "Naples in its purest form",
+      "description": "A tomato-forward classic with sliced garlic, oregano and fragrant extra virgin olive oil.",
+      "image": "/images/pizza-marinara.webp",
+      "ingredients": [
+        "San Marzano tomato",
+        "Garlic",
+        "Oregano",
+        "Olive oil",
+        "Tipo 00 dough"
+      ],
+      "allergens": [
+        "Wheat"
+      ],
+      "tags": [
+        "Vegan"
+      ],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 12
+        }
+      ],
+      "featured": false,
+      "available": true,
+      "sortOrder": 1
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "forno",
+      "slug": "napoli",
+      "category": "Classics",
+      "name": "Napoli",
+      "subtitle": "Bold, salty, unmistakably Italian",
+      "description": "Tomato, fior di latte, anchovies, capers and oregano.",
+      "image": "/images/pizza-napoli.webp",
+      "ingredients": [
+        "Tomato",
+        "Fior di latte",
+        "Anchovies",
+        "Capers",
+        "Oregano"
+      ],
+      "allergens": [
+        "Wheat",
+        "Milk",
+        "Fish"
+      ],
+      "tags": [],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 17
+        }
+      ],
+      "featured": false,
+      "available": true,
+      "sortOrder": 2
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "forno",
+      "slug": "diavola",
+      "category": "Signatures",
+      "name": "Diavola",
+      "subtitle": "A slow-burning favourite",
+      "description": "Spicy salami, Calabrian chilli, fior di latte and a delicate brush of hot honey.",
+      "image": "/images/pizza-diavola.webp",
+      "ingredients": [
+        "Spicy salami",
+        "Calabrian chilli",
+        "Fior di latte",
+        "Tomato",
+        "Hot honey"
+      ],
+      "allergens": [
+        "Wheat",
+        "Milk"
+      ],
+      "tags": [
+        "Spicy",
+        "Popular"
+      ],
+      "variants": [
+        {
+          "label": "12 inch",
+          "price": 19
+        },
+        {
+          "label": "16 inch",
+          "price": 26
+        }
+      ],
+      "featured": true,
+      "available": true,
+      "sortOrder": 3
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "forno",
+      "slug": "quattro-formaggi",
+      "category": "Signatures",
+      "name": "Quattro Formaggi",
+      "subtitle": "Four cheeses, one perfect balance",
+      "description": "Fior di latte, gorgonzola, ricotta and Parmigiano Reggiano over a white base.",
+      "image": "/images/pizza-formaggi.webp",
+      "ingredients": [
+        "Fior di latte",
+        "Gorgonzola",
+        "Ricotta",
+        "Parmigiano Reggiano",
+        "Thyme"
+      ],
+      "allergens": [
+        "Wheat",
+        "Milk"
+      ],
+      "tags": [
+        "Vegetarian"
+      ],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 20
+        }
+      ],
+      "featured": true,
+      "available": true,
+      "sortOrder": 4
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "forno",
+      "slug": "prosciutto-e-rucola",
+      "category": "Signatures",
+      "name": "Prosciutto e Rucola",
+      "subtitle": "Fresh finish, rich heart",
+      "description": "Prosciutto crudo, peppery rocket, cherry tomatoes and shaved parmesan added after baking.",
+      "image": "/images/pizza-prosciutto.webp",
+      "ingredients": [
+        "Prosciutto crudo",
+        "Rocket",
+        "Cherry tomato",
+        "Parmesan",
+        "Fior di latte"
+      ],
+      "allergens": [
+        "Wheat",
+        "Milk"
+      ],
+      "tags": [],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 22
+        }
+      ],
+      "featured": false,
+      "available": true,
+      "sortOrder": 5
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "forno",
+      "slug": "capricciosa",
+      "category": "Signatures",
+      "name": "Capricciosa",
+      "subtitle": "A little bit of everything",
+      "description": "Artichokes, cooked ham, mushrooms, olives and fior di latte on tomato.",
+      "image": "/images/pizza-capricciosa.webp",
+      "ingredients": [
+        "Artichokes",
+        "Ham",
+        "Mushrooms",
+        "Olives",
+        "Fior di latte"
+      ],
+      "allergens": [
+        "Wheat",
+        "Milk"
+      ],
+      "tags": [],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 21
+        }
+      ],
+      "featured": false,
+      "available": true,
+      "sortOrder": 6
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "forno",
+      "slug": "funghi-e-tartufo",
+      "category": "Seasonal",
+      "name": "Funghi e Tartufo",
+      "subtitle": "Earthy and aromatic",
+      "description": "Roasted mushrooms, truffle cream, fior di latte and thyme.",
+      "image": "/images/pizza-funghi.webp",
+      "ingredients": [
+        "Wild mushrooms",
+        "Truffle cream",
+        "Fior di latte",
+        "Thyme"
+      ],
+      "allergens": [
+        "Wheat",
+        "Milk"
+      ],
+      "tags": [
+        "Vegetarian"
+      ],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 23
+        }
+      ],
+      "featured": false,
+      "available": true,
+      "sortOrder": 7
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "forno",
+      "slug": "pistacchio-mortadella",
+      "category": "Seasonal",
+      "name": "Pistacchio Mortadella",
+      "subtitle": "A modern Italian favourite",
+      "description": "Mortadella, pistachio pesto, creamy burrata and lemon zest.",
+      "image": "/images/pizza-mortadella.webp",
+      "ingredients": [
+        "Mortadella",
+        "Pistachio",
+        "Burrata",
+        "Lemon"
+      ],
+      "allergens": [
+        "Wheat",
+        "Milk",
+        "Tree nuts"
+      ],
+      "tags": [
+        "Signature"
+      ],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 24
+        }
+      ],
+      "featured": false,
+      "available": true,
+      "sortOrder": 8
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "forno",
+      "slug": "ortolana",
+      "category": "Seasonal",
+      "name": "Ortolana",
+      "subtitle": "The garden, from the oven",
+      "description": "Grilled aubergine, courgette, peppers, tomato and fior di latte.",
+      "image": "/images/pizza-ortolana.webp",
+      "ingredients": [
+        "Aubergine",
+        "Courgette",
+        "Peppers",
+        "Tomato",
+        "Fior di latte"
+      ],
+      "allergens": [
+        "Wheat",
+        "Milk"
+      ],
+      "tags": [
+        "Vegetarian"
+      ],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 18
+        }
+      ],
+      "featured": false,
+      "available": true,
+      "sortOrder": 9
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "forno",
+      "slug": "salsiccia-e-friarielli",
+      "category": "Seasonal",
+      "name": "Salsiccia e Friarielli",
+      "subtitle": "A Neapolitan pairing",
+      "description": "Italian sausage, friarielli greens, smoked provola and a hint of chilli.",
+      "image": "/images/pizza-salsiccia.webp",
+      "ingredients": [
+        "Italian sausage",
+        "Friarielli",
+        "Smoked provola",
+        "Chilli"
+      ],
+      "allergens": [
+        "Wheat",
+        "Milk"
+      ],
+      "tags": [
+        "Spicy"
+      ],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 22
+        }
+      ],
+      "featured": false,
+      "available": true,
+      "sortOrder": 10
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "forno",
+      "slug": "bufalina",
+      "category": "Seasonal",
+      "name": "Bufalina",
+      "subtitle": "Soft, bright and generous",
+      "description": "Buffalo mozzarella, San Marzano tomato, basil and extra virgin olive oil.",
+      "image": "/images/pizza-bufalina.webp",
+      "ingredients": [
+        "Buffalo mozzarella",
+        "San Marzano tomato",
+        "Basil",
+        "Olive oil"
+      ],
+      "allergens": [
+        "Wheat",
+        "Milk"
+      ],
+      "tags": [
+        "Vegetarian"
+      ],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 20
+        }
+      ],
+      "featured": false,
+      "available": true,
+      "sortOrder": 11
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "narenj",
+      "slug": "koobideh",
+      "category": "From the grill",
+      "name": "Koobideh",
+      "subtitle": "Charcoal grilled comfort",
+      "description": "Two juicy skewers with saffron rice, sumac and grilled tomato.",
+      "image": "/images/traditional-kebab.webp",
+      "ingredients": [
+        "Minced beef",
+        "Saffron rice",
+        "Tomato",
+        "Sumac"
+      ],
+      "allergens": [],
+      "tags": [
+        "Signature"
+      ],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 18
+        }
+      ],
+      "featured": true,
+      "available": true,
+      "sortOrder": 0
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "narenj",
+      "slug": "joojeh-kebab",
+      "category": "From the grill",
+      "name": "Joojeh Kebab",
+      "subtitle": "Saffron and lemon",
+      "description": "Tender chicken marinated with saffron and lemon, served with rice.",
+      "image": "/images/traditional-joojeh.webp",
+      "ingredients": [
+        "Chicken",
+        "Saffron",
+        "Lemon",
+        "Rice"
+      ],
+      "allergens": [],
+      "tags": [],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 19
+        }
+      ],
+      "featured": false,
+      "available": true,
+      "sortOrder": 1
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "narenj",
+      "slug": "zereshk-polo",
+      "category": "Persian table",
+      "name": "Zereshk Polo",
+      "subtitle": "Sweet, tart and fragrant",
+      "description": "Saffron rice with barberries and slow-cooked chicken.",
+      "image": "/images/traditional-zereshk.webp",
+      "ingredients": [
+        "Chicken",
+        "Barberries",
+        "Saffron rice"
+      ],
+      "allergens": [],
+      "tags": [],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 17
+        }
+      ],
+      "featured": false,
+      "available": true,
+      "sortOrder": 2
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "stack",
+      "slug": "double-stack",
+      "category": "Burgers",
+      "name": "Double Stack",
+      "subtitle": "The house favourite",
+      "description": "Two smashed patties, cheddar, pickles and signature sauce.",
+      "image": "/images/fastfood-burger.webp",
+      "ingredients": [
+        "Beef",
+        "Cheddar",
+        "Pickles",
+        "Brioche"
+      ],
+      "allergens": [
+        "Wheat",
+        "Milk",
+        "Egg"
+      ],
+      "tags": [
+        "Popular"
+      ],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 14
+        }
+      ],
+      "featured": true,
+      "available": true,
+      "sortOrder": 0
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "stack",
+      "slug": "hot-stack",
+      "category": "Burgers",
+      "name": "Hot Stack",
+      "subtitle": "Bring the heat",
+      "description": "Double beef, pepper jack, jalapeños and chilli mayo.",
+      "image": "/images/fastfood-hot-stack.webp",
+      "ingredients": [
+        "Beef",
+        "Pepper jack",
+        "Jalapeños",
+        "Brioche"
+      ],
+      "allergens": [
+        "Wheat",
+        "Milk",
+        "Egg"
+      ],
+      "tags": [
+        "Spicy"
+      ],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 15
+        }
+      ],
+      "featured": false,
+      "available": true,
+      "sortOrder": 1
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "stack",
+      "slug": "golden-fries",
+      "category": "Sides",
+      "name": "Golden Fries",
+      "subtitle": "Crisp to the last bite",
+      "description": "Hand-cut potatoes with sea salt and house dip.",
+      "image": "/images/fastfood-fries.webp",
+      "ingredients": [
+        "Potatoes",
+        "Sea salt"
+      ],
+      "allergens": [],
+      "tags": [
+        "Vegetarian"
+      ],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 6
+        }
+      ],
+      "featured": false,
+      "available": true,
+      "sortOrder": 2
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "morrow",
+      "slug": "cappuccino",
+      "category": "Coffee",
+      "name": "Cappuccino",
+      "subtitle": "A slow morning in a cup",
+      "description": "Double espresso with silky steamed milk and a soft cap of foam.",
+      "image": "/images/cafe-cappuccino.webp",
+      "ingredients": [
+        "Espresso",
+        "Milk"
+      ],
+      "allergens": [
+        "Milk"
+      ],
+      "tags": [
+        "Signature"
+      ],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 5
+        }
+      ],
+      "featured": true,
+      "available": true,
+      "sortOrder": 0
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "morrow",
+      "slug": "flat-white",
+      "category": "Coffee",
+      "name": "Flat White",
+      "subtitle": "Small, strong, smooth",
+      "description": "Double espresso and velvety microfoam.",
+      "image": "/images/cafe-flat-white.webp",
+      "ingredients": [
+        "Espresso",
+        "Milk"
+      ],
+      "allergens": [
+        "Milk"
+      ],
+      "tags": [],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 5.5
+        }
+      ],
+      "featured": false,
+      "available": true,
+      "sortOrder": 1
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "morrow",
+      "slug": "butter-croissant",
+      "category": "Bakery",
+      "name": "Butter Croissant",
+      "subtitle": "Baked this morning",
+      "description": "Flaky all-butter pastry with a golden finish.",
+      "image": "/images/cafe-croissant.webp",
+      "ingredients": [
+        "Butter",
+        "Wheat flour"
+      ],
+      "allergens": [
+        "Wheat",
+        "Milk"
+      ],
+      "tags": [
+        "Vegetarian"
+      ],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 4
+        }
+      ],
+      "featured": false,
+      "available": true,
+      "sortOrder": 2
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "scoop",
+      "slug": "pistachio-dream",
+      "category": "Gelato",
+      "name": "Pistachio Dream",
+      "subtitle": "Small batch, big flavour",
+      "description": "Creamy Sicilian pistachio gelato in a crisp waffle cone.",
+      "image": "/images/gelato-pistachio.webp",
+      "ingredients": [
+        "Pistachio",
+        "Milk",
+        "Waffle cone"
+      ],
+      "allergens": [
+        "Milk",
+        "Tree nuts",
+        "Wheat"
+      ],
+      "tags": [
+        "Popular"
+      ],
+      "variants": [
+        {
+          "label": "One scoop",
+          "price": 6
+        },
+        {
+          "label": "Two scoops",
+          "price": 9
+        }
+      ],
+      "featured": true,
+      "available": true,
+      "sortOrder": 0
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "scoop",
+      "slug": "strawberry-fields",
+      "category": "Gelato",
+      "name": "Strawberry Fields",
+      "subtitle": "Real fruit, pure joy",
+      "description": "Bright strawberry gelato with ripe fruit in every bite.",
+      "image": "/images/gelato-strawberry.webp",
+      "ingredients": [
+        "Strawberry",
+        "Milk",
+        "Waffle cone"
+      ],
+      "allergens": [
+        "Milk",
+        "Wheat"
+      ],
+      "tags": [
+        "Vegetarian"
+      ],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 6
+        }
+      ],
+      "featured": false,
+      "available": true,
+      "sortOrder": 1
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "venueId": "scoop",
+      "slug": "mango-glow",
+      "category": "Fresh blends",
+      "name": "Mango Glow",
+      "subtitle": "Sunshine in a glass",
+      "description": "Fresh mango blended with orange and a little lime.",
+      "image": "/images/gelato-mango.webp",
+      "ingredients": [
+        "Mango",
+        "Orange",
+        "Lime"
+      ],
+      "allergens": [],
+      "tags": [
+        "Vegan"
+      ],
+      "variants": [
+        {
+          "label": "Regular",
+          "price": 7
+        }
+      ],
+      "featured": false,
+      "available": true,
+      "sortOrder": 2
+    }
+  ]
+}

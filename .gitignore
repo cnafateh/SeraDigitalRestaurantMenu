@@ -4,4 +4,9 @@ dist/
 vite.config.js
 vite.config.d.ts
 .env*
+!.env.example
 *.log
+server/bin/
+server/obj/
+server/uploads/
+__pycache__/

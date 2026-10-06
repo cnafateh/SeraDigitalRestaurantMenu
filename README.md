@@ -1,105 +1,72 @@
-# Sera — Digital Restaurant Menu
+# Sera Studio
 
-A polished, mobile-first restaurant menu concept built as a portfolio-ready frontend project. Sera combines editorial art direction with practical menu UX: category browsing, ingredient search, dietary states, variable pricing and portion-aware nutrition.
+A self-hosted digital menu platform for restaurants, cafés, fast food concepts and gelato bars. Guests get a responsive, food-first menu; operators get a private dashboard to edit their venue, template, products, prices, availability and photography.
 
-## Highlights
+## What is included
 
-- Responsive menu experience for mobile, tablet and desktop
-- Six realistic demo dishes across five categories
-- Instant category filtering and ingredient-aware search
-- Dedicated, refresh-safe route for every available dish
-- Variable portion pricing with synchronized nutrition values
-- Structured ingredients, allergens and dietary badges
-- Consistent sold-out state without layout shift
-- Keyboard-visible focus states and semantic controls
-- Local, optimized WebP imagery with no remote dependencies
-- Lightweight static production build served by Nginx
-- Multi-stage Docker build and SPA routing fallback
+- Five visual templates: pizzeria, traditional restaurant, fast food, café and gelato/juice bar
+- A complete 12-pizza Italian demo menu, plus four smaller sample venues
+- Search, category filters, dedicated item pages, size/price selection and allergen information
+- Dashboard for venue identity, template selection, publishing, menu items and image uploads
+- ASP.NET Core 10 minimal API, PostgreSQL 17, React 19, TypeScript and Vite 8
+- Self-hosted WebP photography, Nginx reverse proxy and Docker Compose
+- Motion effects with a reduced-motion fallback, semantic controls and visible keyboard focus
 
+The catalog in `server/seed.json` is imported automatically **only when the venues table is empty**. `server/generate_seed.py` rebuilds that file. Demo prices and allergen lists are illustrative; a real venue must review them before publishing.
 
-## Tech stack
+## Quick start
 
-- React 19
-- TypeScript
-- Vite
-- Handcrafted modern CSS
-- Nginx Alpine
-- Docker Compose
+1. Copy `.env.example` to `.env`.
+2. Set a unique `POSTGRES_PASSWORD` and an `SERA_ADMIN_PASSWORD` of at least 12 characters.
+3. Run `docker compose up --build -d`.
+4. Open `http://localhost:3000` for the collection and `http://localhost:3000/admin` for the dashboard.
 
-The production container only serves static assets. There is no Node.js process, API, database or authentication at runtime.
+The web, API and database run in separate containers. PostgreSQL data, uploaded images and authentication keys are stored in named Docker volumes. Change `SERA_PORT` in `.env` if port 3000 is occupied. Put the site behind HTTPS for public deployment.
 
-## Run with Docker
+### Use an existing PostgreSQL server
 
-Docker Desktop is the only requirement.
+The API accepts a standard Npgsql connection string through `DATABASE_URL`. Set that environment variable on the API deployment, pointing to your own server. The Docker Compose file includes a local PostgreSQL service for a one-command demo; an external deployment can omit that service and pass `DATABASE_URL` directly to the API container. The database user needs permission to create the two tables and index on first startup. Back up the database and uploads volume together.
 
-```powershell
-docker compose up --build -d
-```
-
-Open `http://localhost:3000`.
-
-```powershell
-docker compose ps
-docker compose logs -f sera-menu
-docker compose down
-```
-
-To use a different host port:
-
-```powershell
-$env:SERA_PORT=8081
-docker compose up --build -d
-```
-
-No artificial CPU or memory limit is applied to the container.
-
-## Run without Docker
-
-Requires Node.js 22.13 or newer.
+### Local development
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-## Production build
+In another terminal, start PostgreSQL and the API:
 
 ```bash
-npm run build
-npm run preview
+# Set DATABASE_URL and SERA_ADMIN_PASSWORD in your environment first.
+dotnet run --project server/Sera.Api.csproj --urls http://localhost:5000
 ```
 
-## Routes
+Vite proxies `/api` and `/uploads` to the API on port 5000. `npm run build` and `dotnet build server/Sera.Api.csproj` verify both applications. The API container uses a configurable `NUGET_SOURCE` build argument for package restore.
 
-| Route | Description |
+## Routes and API
+
+| Route | Purpose |
 | --- | --- |
-| `/` | Full menu, search, categories and sold-out state |
-| `/menu` | Menu alias |
-| `/dish/margherita` | Margherita details and three sizes |
-| `/dish/diavola` | Diavola details and two sizes |
-| `/dish/truffle-tagliatelle` | Pasta details and two portions |
-| `/dish/mediterranean-sea-bass` | Main course details |
-| `/dish/burrata-heirloom-tomatoes` | Starter details and sharing portion |
+| `/` | Browse the five demo concepts |
+| `/menu/{venueId}` | Public venue menu |
+| `/dish/{venueId}/{slug}` | Product details |
+| `/admin` | Private management dashboard |
+| `/api/menu/{venueId}` | Published venue and items |
+| `/api/admin/*` | Authenticated venue, item and upload operations |
 
-Direct navigation and browser refresh work on every route through Nginx's SPA fallback.
+The dashboard uses an HTTP-only, same-site authentication cookie. Write requests require a same-origin custom header; login is rate limited. Uploads accept WebP, PNG and JPEG files up to 10 MB, with randomized server filenames. Keep the admin password private and use HTTPS on any public server.
+
+## Design notes
+
+The visual system gives each concept its own palette and hero composition while keeping navigation and editing consistent. Search and categories remain close to the menu content. Motion uses transforms and opacity, and the reduced-motion preference disables decorative movement. These choices follow [WCAG 2.2 navigation and focus guidance](https://www.w3.org/WAI/standards-guidelines/wcag/new-in-22/), [W3C reduced-motion technique C39](https://www.w3.org/WAI/WCAG22/Techniques/css/C39), and [web.dev animation performance guidance](https://web.dev/articles/animations-and-performance/).
 
 ## Project structure
 
 ```text
-src/
-├── components/   Reusable visual components
-├── data/         Typed menu content
-├── hooks/        Lightweight client-side routing
-├── pages/        Menu, dish details and 404 views
-├── types/        Shared domain types
-├── App.tsx       Route composition
-└── styles.css    Complete responsive design system
+server/             ASP.NET API, schema and repeatable demo catalog
+src/pages/          Public collection, menu, item and dashboard screens
+src/types/          Shared frontend model
+src/lib/            API client
+src/platform.css    Templates, layout and motion
+public/images/      Local WebP menu photography
 ```
-
-## Design approach
-
-- Editorial typography and food-led imagery establish a premium restaurant character without sacrificing readability.
-- The first viewport exposes menu context and browsing tools immediately; there is no marketing gate before the menu.
-- Cards use a consistent component model for variable pricing, dietary badges, details affordance and sold-out treatment.
-- Dish pages layer information by importance: overview, portion, ingredients, primary nutrition and collapsible secondary values.
-- The 375–390 px mobile experience remains the baseline while larger layouts make purposeful use of space.

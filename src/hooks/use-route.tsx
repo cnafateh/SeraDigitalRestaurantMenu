@@ -1,7 +1,16 @@
-import { useEffect, useState, type AnchorHTMLAttributes, type MouseEvent, type ReactNode } from "react";
+import {
+  useEffect,
+  useState,
+  type AnchorHTMLAttributes,
+  type MouseEvent,
+  type ReactNode,
+} from "react";
 
 export function getPath() {
-  return window.location.pathname.replace(/\/$/, "") || "/";
+  return (
+    (window.location.pathname.replace(/\/$/, "") || "/") +
+    window.location.search
+  );
 }
 
 export function useRoute() {
@@ -27,7 +36,12 @@ type RouteLinkProps = {
   children: ReactNode;
 } & AnchorHTMLAttributes<HTMLAnchorElement>;
 
-export function RouteLink({ href, children, onClick, ...props }: RouteLinkProps) {
+export function RouteLink({
+  href,
+  children,
+  onClick,
+  ...props
+}: RouteLinkProps) {
   function handleClick(event: MouseEvent<HTMLAnchorElement>) {
     onClick?.(event);
     if (
@@ -43,5 +57,9 @@ export function RouteLink({ href, children, onClick, ...props }: RouteLinkProps)
     }
   }
 
-  return <a href={href} onClick={handleClick} {...props}>{children}</a>;
+  return (
+    <a href={href} onClick={handleClick} {...props}>
+      {children}
+    </a>
+  );
 }

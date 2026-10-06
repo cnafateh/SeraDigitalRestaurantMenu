@@ -1,13 +1,50 @@
 services:
-  sera-menu:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: sera
+      POSTGRES_USER: sera
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sera -d sera"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
     build:
       context: .
-      dockerfile: Dockerfile
-    image: sera-restaurant-menu:latest
-    container_name: sera-restaurant-menu
+      dockerfile: server/Dockerfile
     restart: unless-stopped
-    init: true
+    environment:
+      DATABASE_URL: Host=db;Port=5432;Database=sera;Username=sera;Password=${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      SERA_ADMIN_PASSWORD: ${SERA_ADMIN_PASSWORD:?Set SERA_ADMIN_PASSWORD in .env}
+      ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+    volumes:
+      - uploads:/app/uploads
+      - protection_keys:/root/.aspnet/DataProtection-Keys
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  web:
+    build: .
+    restart: unless-stopped
     ports:
       - "${SERA_PORT:-3000}:80"
-    security_opt:
-      - no-new-privileges:true
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  uploads:
+  protection_keys:
