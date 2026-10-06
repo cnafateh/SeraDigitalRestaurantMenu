@@ -35,6 +35,8 @@ builder.Services.AddRateLimiter(options => options.AddFixedWindowLimiter("login"
 builder.WebHost.ConfigureKestrel(options => options.Limits.MaxRequestBodySize = 12 * 1024 * 1024);
 
 var app = builder.Build();
+app.UseDefaultFiles();
+app.UseStaticFiles();
 app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
@@ -149,6 +151,10 @@ app.MapPost("/api/admin/upload", async (IFormFile file) =>
     await fullInput.CopyToAsync(output);
     return Results.Ok(new { url = $"/uploads/{name}" });
 }).RequireAuthorization().DisableAntiforgery();
+
+// The published image serves the SPA from wwwroot; the API-only container has no static assets.
+if (app.Environment.WebRootFileProvider.GetFileInfo("index.html").Exists)
+    app.MapFallbackToFile("index.html");
 
 await using (var scope = app.Services.CreateAsyncScope())
     await scope.ServiceProvider.GetRequiredService<MenuStore>().Initialize();

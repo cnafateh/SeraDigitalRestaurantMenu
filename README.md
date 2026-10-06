@@ -9,7 +9,7 @@ A self-hosted digital menu platform for restaurants, cafés, fast food concepts 
 - Search, category filters, dedicated item pages, size/price selection and allergen information
 - Dashboard for venue identity, template selection, publishing, menu items and image uploads
 - ASP.NET Core 10 minimal API, PostgreSQL 17, React 19, TypeScript and Vite 8
-- Self-hosted WebP photography, Nginx reverse proxy and Docker Compose
+- Self-hosted WebP photography, Docker Compose and a single-image deployment option
 - Motion effects with a reduced-motion fallback, semantic controls and visible keyboard focus
 
 The catalog in `server/seed.json` is imported automatically **only when the venues table is empty**. `server/generate_seed.py` rebuilds that file. Demo prices and allergen lists are illustrative; a real venue must review them before publishing.
@@ -21,11 +21,32 @@ The catalog in `server/seed.json` is imported automatically **only when the venu
 3. Run `docker compose up --build -d`.
 4. Open `http://localhost:3000` for the collection and `http://localhost:3000/admin` for the dashboard.
 
-The web, API and database run in separate containers. PostgreSQL data, uploaded images and authentication keys are stored in named Docker volumes. Change `SERA_PORT` in `.env` if port 3000 is occupied. Put the site behind HTTPS for public deployment.
+This development Compose stack runs web, API and PostgreSQL in separate containers. PostgreSQL data, uploaded images and authentication keys are stored in named Docker volumes. Change `SERA_PORT` in `.env` if port 3000 is occupied. Put the site behind HTTPS for public deployment.
+
+### Deploy the published image
+
+`ghcr.io/cnafateh/seradigitalrestaurantmenu:latest` contains both the built frontend and ASP.NET API. It listens on container port **80** and needs a reachable PostgreSQL server. Set these environment variables in your deployment platform:
+
+| Variable | Value |
+| --- | --- |
+| `DATABASE_URL` | Npgsql connection string, for example `Host=postgres.example.com;Port=5432;Database=sera;Username=sera;Password=...` |
+| `SERA_ADMIN_PASSWORD` | A unique password of at least 12 characters |
+| `ASPNETCORE_FORWARDEDHEADERS_ENABLED` | `true` when serving through an HTTPS reverse proxy |
+
+Use `/health` for the container health check. Persist `/app/uploads` and `/root/.aspnet/DataProtection-Keys` across replacements. The database user needs permission to create tables and an index on first startup; seed data is imported when the venues table is empty. If `DATABASE_URL` is absent or PostgreSQL cannot be reached, the app exits during startup and the container cannot become healthy. Check the container logs for the connection error.
+
+For a server with PostgreSQL already running, set `SERA_DATABASE_URL`, `SERA_ADMIN_PASSWORD` and optionally `SERA_PORT` in `.env`, then run:
+
+```bash
+docker compose -f docker-compose.prod.yml up -d
+docker compose -f docker-compose.prod.yml ps
+```
+
+The production Compose file maps `SERA_DATABASE_URL` to the image's `DATABASE_URL`. If PostgreSQL runs directly on the Docker host, use a hostname reachable **from inside the container** rather than `localhost`.
 
 ### Use an existing PostgreSQL server
 
-The API accepts a standard Npgsql connection string through `DATABASE_URL`. Set that environment variable on the API deployment, pointing to your own server. The Docker Compose file includes a local PostgreSQL service for a one-command demo; an external deployment can omit that service and pass `DATABASE_URL` directly to the API container. The database user needs permission to create the two tables and index on first startup. Back up the database and uploads volume together.
+The API accepts a standard Npgsql connection string through `DATABASE_URL`. The development Compose file includes a local PostgreSQL service for a one-command demo; the published image and `docker-compose.prod.yml` use your existing database server. Back up the database and uploads volume together.
 
 ### Local development
 
@@ -64,6 +85,8 @@ The visual system gives each concept its own palette and hero composition while 
 
 ```text
 server/             ASP.NET API, schema and repeatable demo catalog
+web/Dockerfile      Nginx frontend for the three-service development stack
+Dockerfile          Published all-in-one frontend and API image
 src/pages/          Public collection, menu, item and dashboard screens
 src/types/          Shared frontend model
 src/lib/            API client

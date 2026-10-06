@@ -36,7 +36,9 @@ services:
       retries: 10
 
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: web/Dockerfile
     restart: unless-stopped
     ports:
       - "${SERA_PORT:-3000}:80"

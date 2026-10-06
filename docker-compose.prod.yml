@@ -1,0 +1,18 @@
+services:
+  app:
+    image: ghcr.io/cnafateh/seradigitalrestaurantmenu:latest
+    pull_policy: always
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: ${SERA_DATABASE_URL:?Set SERA_DATABASE_URL to your PostgreSQL connection string}
+      SERA_ADMIN_PASSWORD: ${SERA_ADMIN_PASSWORD:?Set SERA_ADMIN_PASSWORD in .env}
+      ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+    ports:
+      - "${SERA_PORT:-3000}:80"
+    volumes:
+      - uploads:/app/uploads
+      - protection_keys:/root/.aspnet/DataProtection-Keys
+
+volumes:
+  uploads:
+  protection_keys:
